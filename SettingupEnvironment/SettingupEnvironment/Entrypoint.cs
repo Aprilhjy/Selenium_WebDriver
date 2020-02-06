@@ -8,22 +8,17 @@ class Entrypoint
 {
     static void Main()
     {
-        string url = "http://testing.todvachev.com/selectors/id/";
-        string ID = "testImage";
+        string url = "http://testing.todvachev.com/selectors/class-name/";
+        string classname = "testClass";
         IWebDriver driver = new ChromeDriver();
 
         driver.Navigate().GoToUrl(url);
 
-        IWebElement element = driver.FindElement(By.Id(ID));
+        IWebElement element = driver.FindElement(By.ClassName(classname));
 
-        if (element.Displayed)
-        {
-            GreenMessage("Yes! I can see the element, it's right there!!!");
-        }
-        else
-        {
-            RedMessage("Well, something went wrong, I couldn't see the element!");
-        }
+        Console.WriteLine(element.Text);
+
+       
 
         driver.Quit();
        
