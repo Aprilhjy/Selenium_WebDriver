@@ -8,11 +8,13 @@ class Entrypoint
 {
     static void Main()
     {
+        string url = "http://testing.todvachev.com/selectors/id/";
+        string ID = "testImage";
         IWebDriver driver = new ChromeDriver();
 
-        driver.Navigate().GoToUrl("http://testing.todorvachev.com/selectors/name/");
+        driver.Navigate().GoToUrl(url);
 
-        IWebElement element = driver.FindElement(By.Name("myName"));
+        IWebElement element = driver.FindElement(By.Id(ID));
 
         if (element.Displayed)
         {
