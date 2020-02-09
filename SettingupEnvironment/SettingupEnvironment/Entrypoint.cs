@@ -7,23 +7,25 @@ using System.Threading;
 class Entrypoint
 {
     static IWebDriver driver = new ChromeDriver();
-    static IWebElement textBox;
+    static IWebElement checkBox;
 
     static void Main()
     {
-        string url = "http://testing.todvachev.com/special-elements/text-input-field/";
+        string url = "http://testing.todvachev.com/special-elements/check-button-test-3/";
+        string option = "3";
      
         driver.Navigate().GoToUrl(url);
 
-        textBox = driver.FindElement(By.Name("username"));
+        checkBox = driver.FindElement(By.CssSelector("#post-33 > div > p:nth-child(8) > input[type=checkbox]:nth-child("+ option +")"));
 
-        textBox.SendKeys("Test Text");
-
-        Thread.Sleep(5000);
-
-        Console.WriteLine(textBox.GetAttribute("value"));
-
-        Thread.Sleep(5000);
+        if (checkBox.GetAttribute("checked") == "true")
+        {
+            Console.WriteLine("This checkbox is checked!");
+        }
+        else
+        {
+            Console.WriteLine("This checkbox is NOT checked");
+        }
 
         driver.Quit();
 
