@@ -7,40 +7,38 @@ using System.Threading;
 class Entrypoint
 {
     static IWebDriver driver = new ChromeDriver();
-    static IWebElement dropDownMenu;
-    static IWebElement elementFromDropDownMenu;
+
+    static IAlert alert;
+
+    static IWebElement image;
+
 
     static void Main()
     {
-        string url = "http://testing.todvachev.com/special-elements/drop-down-menu-test/";
-        string dropDownMenuEliments = "#post-6 > div > p:nth-child(6) > select > option:nth-child(3)";
-
+        string url = "http://testing.todvachev.com/special-elements/alert-box/";
 
         driver.Navigate().GoToUrl(url);
 
-        dropDownMenu = driver.FindElement(By.Name("DropDownTest"));
+        alert = driver.SwitchTo().Alert();
 
-        Console.WriteLine(dropDownMenu.GetAttribute("value"));
+        Console.WriteLine(alert.Text);
 
-        elementFromDropDownMenu = driver.FindElement(By.CssSelector(dropDownMenuEliments));
+        alert.Accept();
 
-        Console.WriteLine(elementFromDropDownMenu.GetAttribute("value"));
+        image = driver.FindElement(By.CssSelector("#post-119 > div > figure > img"));
 
-        elementFromDropDownMenu.Click();
-
-        Console.WriteLine("The selected value is " + dropDownMenu.GetAttribute("value"));
-
-        Thread.Sleep(5000);
-
-        for (int i = 1; i < 4; i++)
+        try
         {
-            dropDownMenuEliments = "#post-6 > div > p:nth-child(6) > select > option:nth-child("+ i +")";
+            if (image.Displayed)
+            {
+                Console.WriteLine("The alert was accepted successfully and I can see the image!");
+            }
 
-            elementFromDropDownMenu = driver.FindElement(By.CssSelector(dropDownMenuEliments));
-
-            Console.WriteLine("The " + i +" option from the drop down menu is:" + elementFromDropDownMenu.GetAttribute("value"));
         }
-
+        catch (NoSuchElementException)
+        {
+            Console.WriteLine("Something went wrong!");
+        }
 
         Thread.Sleep(5000);
 
