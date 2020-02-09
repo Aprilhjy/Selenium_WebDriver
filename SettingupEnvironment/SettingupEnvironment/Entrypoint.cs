@@ -6,64 +6,29 @@ using System.Threading;
 
 class Entrypoint
 {
+    static IWebDriver driver = new ChromeDriver();
+    static IWebElement textBox;
+
     static void Main()
     {
-        string url = "http://testing.todvachev.com/selectors/css-path/";
-        string cssPath = "#post-108 > div > figurmg";
-        string xPath = "//*[@id=\"post-108\"]/div/figure/img";
-
-        IWebDriver driver = new ChromeDriver();
-
+        string url = "http://testing.todvachev.com/special-elements/text-input-field/";
+     
         driver.Navigate().GoToUrl(url);
 
-        IWebElement cssPathElement;
-        IWebElement xPathElement = driver.FindElement(By.XPath(xPath));
+        textBox = driver.FindElement(By.Name("username"));
 
-        try
-        {
-            cssPathElement = driver.FindElement(By.CssSelector(cssPath));
-            if (cssPathElement.Displayed)
-            {
-                GreenMessage("I can see the css path element");
-            }
-        }
-        catch (NoSuchElementException)
-        {
-            RedMessage("I can't see the CSS Path Element");
+        textBox.SendKeys("Test Text");
 
-        }
+        Thread.Sleep(5000);
 
-       
+        Console.WriteLine(textBox.GetAttribute("value"));
 
-        if (xPathElement.Displayed)
-        {
-            GreenMessage("I can see the XPath Element");
-        }
-        else
-        {
-            RedMessage("I can't see the XPath Element");
-        }
-
-
+        Thread.Sleep(5000);
 
         driver.Quit();
-       
-    }
-
-    private static void RedMessage(string message)
-    {
-        Console.ForegroundColor = ConsoleColor.Red;
-        Console.WriteLine(message);
-        Console.ForegroundColor = ConsoleColor.White;
-        
-    }
-
-    private static void GreenMessage(string message)
-    {
-        Console.ForegroundColor = ConsoleColor.Green;
-        Console.WriteLine(message);
-        Console.ForegroundColor = ConsoleColor.White;
 
     }
+
 }
+
 
