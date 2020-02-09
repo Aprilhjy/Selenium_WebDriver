@@ -7,21 +7,29 @@ using System.Threading;
 class Entrypoint
 {
     static IWebDriver driver = new ChromeDriver();
-    static IWebElement checkBox;
+    static IWebElement radioButton;
 
     static void Main()
     {
-        string url = "http://testing.todvachev.com/special-elements/check-button-test-3/";
-        string option = "1";
-     
+        string url = "http://testing.todvachev.com/special-elements/radio-button-test/";
+        string[] option = {"1", "3", "5"};
+
         driver.Navigate().GoToUrl(url);
 
-        checkBox = driver.FindElement(By.CssSelector("#post-33 > div > p:nth-child(8) > input[type=checkbox]:nth-child("+ option +")"));
+        for (int i = 0; i < option.Length; i++)
+        {
+            radioButton = driver.FindElement(By.CssSelector("#post-10 > div > form > p:nth-child(6) > input[type=radio]:nth-child("+ option[i] +")"));
 
-        checkBox.Click();
+            if (radioButton.GetAttribute("checked") == "true")
+            {
+                Console.WriteLine("The "+ (i+1) + " radiobutton has been checked!");
+            }
+            else
+            {
+                Console.WriteLine("The "+ (i+1) +" radiobutton has not been checked!");
+            }
 
-        Thread.Sleep(5000);
-
+        }
         driver.Quit();
 
     }
