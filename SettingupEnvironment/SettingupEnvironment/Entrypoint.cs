@@ -9,24 +9,31 @@ class Entrypoint
     static void Main()
     {
         string url = "http://testing.todvachev.com/selectors/css-path/";
-        string cssPath = "#post-108 > div > figure > img";
+        string cssPath = "#post-108 > div > figurmg";
         string xPath = "//*[@id=\"post-108\"]/div/figure/img";
 
         IWebDriver driver = new ChromeDriver();
 
         driver.Navigate().GoToUrl(url);
 
-        IWebElement cssPathElement = driver.FindElement(By.CssSelector(cssPath));
+        IWebElement cssPathElement;
         IWebElement xPathElement = driver.FindElement(By.XPath(xPath));
 
-        if (cssPathElement.Displayed)
+        try
         {
-            GreenMessage("I can see the CSS Path Element");
+            cssPathElement = driver.FindElement(By.CssSelector(cssPath));
+            if (cssPathElement.Displayed)
+            {
+                GreenMessage("I can see the css path element");
+            }
         }
-        else
+        catch (NoSuchElementException)
         {
             RedMessage("I can't see the CSS Path Element");
+
         }
+
+       
 
         if (xPathElement.Displayed)
         {
