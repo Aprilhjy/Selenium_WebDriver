@@ -7,29 +7,43 @@ using System.Threading;
 class Entrypoint
 {
     static IWebDriver driver = new ChromeDriver();
-    static IWebElement radioButton;
+    static IWebElement dropDownMenu;
+    static IWebElement elementFromDropDownMenu;
 
     static void Main()
     {
-        string url = "http://testing.todvachev.com/special-elements/radio-button-test/";
-        string[] option = {"1", "3", "5"};
+        string url = "http://testing.todvachev.com/special-elements/drop-down-menu-test/";
+        string dropDownMenuEliments = "#post-6 > div > p:nth-child(6) > select > option:nth-child(3)";
+
 
         driver.Navigate().GoToUrl(url);
 
-        for (int i = 0; i < option.Length; i++)
+        dropDownMenu = driver.FindElement(By.Name("DropDownTest"));
+
+        Console.WriteLine(dropDownMenu.GetAttribute("value"));
+
+        elementFromDropDownMenu = driver.FindElement(By.CssSelector(dropDownMenuEliments));
+
+        Console.WriteLine(elementFromDropDownMenu.GetAttribute("value"));
+
+        elementFromDropDownMenu.Click();
+
+        Console.WriteLine("The selected value is " + dropDownMenu.GetAttribute("value"));
+
+        Thread.Sleep(5000);
+
+        for (int i = 1; i < 4; i++)
         {
-            radioButton = driver.FindElement(By.CssSelector("#post-10 > div > form > p:nth-child(6) > input[type=radio]:nth-child("+ option[i] +")"));
+            dropDownMenuEliments = "#post-6 > div > p:nth-child(6) > select > option:nth-child("+ i +")";
 
-            if (radioButton.GetAttribute("checked") == "true")
-            {
-                Console.WriteLine("The "+ (i+1) + " radiobutton has been checked!");
-            }
-            else
-            {
-                Console.WriteLine("The "+ (i+1) +" radiobutton has not been checked!");
-            }
+            elementFromDropDownMenu = driver.FindElement(By.CssSelector(dropDownMenuEliments));
 
+            Console.WriteLine("The " + i +" option from the drop down menu is:" + elementFromDropDownMenu.GetAttribute("value"));
         }
+
+
+        Thread.Sleep(5000);
+
         driver.Quit();
 
     }
