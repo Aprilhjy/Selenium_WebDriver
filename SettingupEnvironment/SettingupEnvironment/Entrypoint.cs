@@ -18,13 +18,9 @@ class Entrypoint
 
         checkBox = driver.FindElement(By.CssSelector("#post-33 > div > p:nth-child(8) > input[type=checkbox]:nth-child("+ option +")"));
 
-        Console.WriteLine(checkBox.GetAttribute("value"));
+        checkBox.Click();
 
-        option = "3";
-
-        checkBox = driver.FindElement(By.CssSelector("#post-33 > div > p:nth-child(8) > input[type=checkbox]:nth-child(" + option + ")"));
-
-        Console.WriteLine(checkBox.GetAttribute("value"));
+        Thread.Sleep(5000);
 
         driver.Quit();
 
