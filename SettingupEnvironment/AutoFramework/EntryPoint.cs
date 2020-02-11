@@ -7,25 +7,12 @@ namespace AutoFramework
     {
         static void Main()
         {
-
-
             Driver.driver.Navigate().GoToUrl("http://testing.todvachev.com/");
 
             NavigateTo.LoginFormThroughMenu();
+            Actions.FillLoginForm(Config.Credentials.Valid.Username, Config.Credentials.Valid.Password,Config.Credentials.Valid.RepeatPassword);
 
-            Thread.Sleep(5000);
-
-            Driver.driver.Navigate().GoToUrl("http://testing.todvachev.com/");
-
-            NavigateTo.LoginFormThroughThePost();
-
-            Thread.Sleep(5000);
-
-
-
-
-
-
+  
         }
     }
 }
