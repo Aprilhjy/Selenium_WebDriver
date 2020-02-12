@@ -1,35 +1,27 @@
-﻿using AutoFramework.UIElements;
-using System.Threading;
-
-namespace AutoFramework
+﻿namespace AutoFramework
 {
+    using AutoFramework.Pages;
+
     public static class NavigateTo
     {
-        public static void LoginFormThroughMenu()
+        public static void LoginFormScenarioThroughTestCases()
+        {
+            Menu menu = new Menu();
+            TestCasesPage tcPage = new TestCasesPage();
+            UsernameCasePost ucPost = new UsernameCasePost();
+
+            menu.TestCases.Click();
+            tcPage.UsernameCase.Click();
+            ucPost.LoginFormLink.Click();
+        }
+
+        public static void LoginFormScenarioThroughMenu()
         {
             Menu menu = new Menu();
             TestScenariosPage tsPage = new TestScenariosPage();
 
             menu.TestScenarios.Click();
-            Thread.Sleep(5000);
-            tsPage.LoginForm.Click();
-            Thread.Sleep(5000);
-        }
-
-        public static void LoginFormThroughThePost()
-        {
-            Menu menu = new Menu();
-            TestCasesPage tcPage = new TestCasesPage();
-            UsernameFieldPost ufPost = new UsernameFieldPost();
-
-            menu.TestCases.Click();
-            Thread.Sleep(5000);
-            tcPage.UsernameFieldPost.Click();
-            Thread.Sleep(5000);
-            ufPost.LoginFormLink.Click();
-            Thread.Sleep(5000);
-
-            Driver.driver.Quit();
+            tsPage.LoginFormScenario.Click();
         }
     }
 }

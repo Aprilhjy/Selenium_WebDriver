@@ -1,22 +1,28 @@
-﻿using AutoFramework.UIElements;
-
-namespace AutoFramework
+﻿namespace AutoFramework
 {
+    using OpenQA.Selenium.Chrome;
+    using Pages;
+
     public static class Actions
     {
-        public static void InitializerDriver()
+        public static void InitializeDriver()
         {
+            Driver.driver = new ChromeDriver();
             Driver.driver.Navigate().GoToUrl(Config.BaseURL);
+            Driver.WaitForElementUpTo(Config.ElementsWaitingTimeout);
         }
+
         public static void FillLoginForm(string username, string password, string repeatPassword)
         {
-            LoginScenarioPost lspost = new LoginScenarioPost();
+            LoginScenarioPost loginScenario = new LoginScenarioPost();
 
-            lspost.UsernameField.SendKeys(username);
-            lspost.PasswordField.SendKeys(password);
-            lspost.RepeatPasswordField.SendKeys(repeatPassword);
-            lspost.LoginButton.Click();
-
+            loginScenario.UsernameField.Clear();
+            loginScenario.UsernameField.SendKeys(username);
+            loginScenario.PasswordField.Clear();
+            loginScenario.PasswordField.SendKeys(password);
+            loginScenario.RepeatPasswordField.Clear();
+            loginScenario.RepeatPasswordField.SendKeys(repeatPassword);
+            loginScenario.LoginButton.Click();
         }
     }
 }
