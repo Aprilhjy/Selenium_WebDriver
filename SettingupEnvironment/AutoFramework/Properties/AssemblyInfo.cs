@@ -16,7 +16,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCulture("")]
 
 // Parallelism
-//[assembly: Parallelizable(ParallelScope.Self)]
+//[assembly: Parallelizable(ParlelScope.Self)]
 //[assembly: LevelOfParallelism(2)]
 
 // Setting ComVisible to false makes the types in this assembly not visible 

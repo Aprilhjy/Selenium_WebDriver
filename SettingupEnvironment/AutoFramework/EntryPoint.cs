@@ -9,9 +9,21 @@ namespace AutoFramework
 {
     public class EntryPoint
     {
-        public static void Main()
+        static void Main()
         {
-            
+            IWebDriver driver = new ChromeDriver();
+            string url = "http://testing.todvachev.com/";
+
+            driver.Navigate().GoToUrl(url);
+
+            IWebElement image = driver.FindElement(By.CssSelector("#page-17 > div > p:nth-child(1) > a > img"));
+
+            driver.Manage().Window.Maximize();
+
+            System.Console.WriteLine(image.Location.X);
+            System.Console.WriteLine(image.Location.Y);
+            System.Console.WriteLine(image.Size.Width);
+            System.Console.WriteLine(image.Size.Height);
         }
     }
 }
