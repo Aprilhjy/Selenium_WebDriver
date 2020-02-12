@@ -3,9 +3,12 @@
     using OpenQA.Selenium;
     using NUnit.Framework;
     using System.Threading;
+
+    [Parallelizable]
     public class LoginInvalidPassword
     {
         IAlert alert;
+        IWebDriver driver;
 
         public LoginInvalidPassword()
         {
@@ -14,42 +17,37 @@
         [OneTimeSetUp]
         public void Initialize()
         {
-            Actions.InitializeDriver();
-            NavigateTo.LoginFormScenarioThroughTestCases();
+            driver = Actions.InitializeDriver(5);
+            NavigateTo.LoginFormScenarioThroughTestCases(driver);
         }
 
         [Test]
         public void LessThan5Chars()
         {
-            Thread.Sleep(1000);
             Actions.FillLoginForm(Config.Credentials.Valid.Username,
-                Config.Credentials.Invalid.Password.FourCharacters, 
-                Config.Credentials.Invalid.Password.FourCharacters);
-            Thread.Sleep(1000);
+                Config.Credentials.Invalid.Password.FourCharacters, Config.Credentials.Invalid.Password.FourCharacters, driver);
 
-            alert = Driver.driver.SwitchTo().Alert();
-            Thread.Sleep(5000);
+            alert = driver.SwitchTo().Alert();
             Assert.AreEqual(Config.AlertsTexts.PasswordLenghtOutOfRange, alert.Text);
             alert.Accept();
-
+            
         }
 
         [Test]
         public void MoreThan12Chars()
         {
             Actions.FillLoginForm(Config.Credentials.Valid.Username,
-                Config.Credentials.Invalid.Password.ThirteenCharacters, Config.Credentials.Invalid.Password.ThirteenCharacters);
+                Config.Credentials.Invalid.Password.ThirteenCharacters, Config.Credentials.Invalid.Password.ThirteenCharacters, driver);
 
-            alert = Driver.driver.SwitchTo().Alert();
-            Thread.Sleep(5000);
+            alert = driver.SwitchTo().Alert();
             Assert.AreEqual(Config.AlertsTexts.PasswordLenghtOutOfRange, alert.Text);
             alert.Accept();
         }
-        
+
         [OneTimeTearDown]
         public void CleanUp()
         {
-            Driver.driver.Quit();
+            driver.Quit();
         }
     }
 }
